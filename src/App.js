@@ -1,14 +1,17 @@
-import React,{Component} from 'react'
-import Nav from './page/index'
-class App extends Component{
-    render(){
-        return (
-            <div>
-                <div>hello Yangzixi</div>
-                <div>{false?'这是对的':'这是不对的'}</div>
-                <Nav />
-            </div>
-        )
-    }
-}
-export default App
+import React from 'react'
+import { BrowserRouter , Route, Switch } from 'react-router-dom'
+import Home from './page/routerPages/home'
+import Page1 from './page/routerPages/page1'
+import Page2 from './page/routerPages/page2'
+
+
+const BasicRoute = () => (
+    <BrowserRouter>
+        <Switch>
+            <Route path="/" component={Home} />
+            <Route exact path="/Page1" component={Page1} />
+            <Route exact path="/Page2" component={Page2} />
+        </Switch>
+    </BrowserRouter>
+)
+export default BasicRoute
