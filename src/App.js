@@ -8,8 +8,8 @@ import Page2 from './page/routerPages/page2'
 const BasicRoute = () => (
     <BrowserRouter>
         <Switch>
-            <Route path="/" component={Home} />
-            <Route exact path="/Page1" component={Page1} />
+            <Route exact path="/" component={Home} />
+            <Route exact path="/Page1/:num" component={Page1} />
             <Route exact path="/Page2" component={Page2} />
         </Switch>
     </BrowserRouter>
