@@ -16,7 +16,7 @@ class Item1  extends Component { //cc
     render() { 
         return ( 
            <div>
-            <div>这里是Page1 content</div>
+            <div>这里是Page1 content--测试</div>
            
             </div>
          );
