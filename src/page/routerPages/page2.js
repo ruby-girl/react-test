@@ -4,13 +4,12 @@ class Page2  extends Component { //cc
    constructor(prop){
       super(prop)
       this.state={
-         text:'',
-         v:'旧值-'
+         text:''
       }
    }
-   // 需要更新的组件--生命周期函数--如果将要更新的组件的值没有变化，将不进行更新，优化新能
+   // 需要更新的组件--生命周期函数--如果将要更新的组件的值没有变化，将不进行更新，优化优化
    shouldComponentUpdate(nextProps,nextState){
-      if(nextProps.txt == this.props.txt){         
+      if(nextProps.txt === this.props.txt){         
          return false
       }else{    
          return true

@@ -1,26 +1,25 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Item from '../components/Item'
-import Page2 from './page2'
+import Three from './three'
 import axios from 'axios'
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants'
-const  type={
-    1:function(){this.testIf(1)},
-    2:function(){ this.testIf(2)},
-    3:function(){this.testIf(3)}
+const type = {
+    0: function () { this.testIf(0) },
+    1: function () { this.testIf(1) },
+    2: function () { this.testIf(2) }
 }
 class allList extends Component {
-    
+
     constructor(props) {
         super(props)
-       
+
         this.state = {
-            inputValue: '列表1',
+            inputValue: '',
             list: [],
-            obj:{
-                name:'',
-                age:'',
-                state:'异常'
+            obj: {
+                name: '',
+                age: '',
+                state: '异常'
             }
         }
     }
@@ -36,10 +35,9 @@ class allList extends Component {
                         return <Item txt={item} itemIndex={i} key={i} delItem={this.delItems.bind(this)}></Item>
                     })}
                 </ul>
-                <Page2 txt="这是父组件传递的" itemIndex={1} delItem={this.delItems.bind(this)}/>
-                <Link to={{pathname:"/Page1/9"}}>About</Link>
-                <div onClick={() => this.props.history.push({pathname:"/Page1/" + 9})}>router test to page1</div>
-                
+                <Three txt="这是父组件传递给子组件" itemIndex={1} delItem={this.delItems.bind(this)} />
+                <Link to={{ pathname: "/three/9" }}>测试路由参数传递方式 Link router test to three</Link>
+                <div onClick={() => this.props.history.push({ pathname: "/three/" + 9 })}>测试路由参数传递方式router test to three</div>
             </div>
         )
     }
@@ -53,11 +51,10 @@ class allList extends Component {
     addItem() {
         this.state.list.push(this.state.inputValue)
         this.setState({
-            list: this.state.list
+            list: this.state.list,
+            inputValue:''
         })
     }
-
-   
     delItems(i) {
         type[i].call(this)
         let list = this.state.list
@@ -65,14 +62,14 @@ class allList extends Component {
         this.setState({
             list: list
         })
-        axios.post('https://easy-mock.com/mock/5c00952c494e234c090162a5/example/getList').then((res)=>{
+        axios.post('https://easy-mock.com/mock/5c00952c494e234c090162a5/example/getList').then((res) => {
             console.info(res)
-        }).catch(()=>{
+        }).catch(() => {
             console.log('错误处理')
         })
     }
-    testIf(n){
-        console.log(`这是第${n}行`)
+    testIf(n) {
+        console.log(`这是第${n + 1}行`)
     }
 }
 export default allList
