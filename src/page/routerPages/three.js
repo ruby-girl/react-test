@@ -10,13 +10,14 @@ class Three extends Component {
 
    init = () => {
       const scene = new THREE.Scene()//创建场景
-      const camera = new THREE.PerspectiveCamera(75, this.mount.clientWidth / this.mount.clientHeight, 0.1, 1000);//相机
-      const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 })//材质
+      const camera = new THREE.PerspectiveCamera(45, this.mount.clientWidth / this.mount.clientHeight, 0.1, 1000);//相机
+      const cubeMaterial = new THREE.MeshLambertMaterial({ emissive: 0xFF0000 })//材质 emissive:自发光颜色
       const renderer = new THREE.WebGLRenderer({
          antialias: true
       })//创建渲染器
       renderer.setClearColor(0xffffff)
       renderer.setSize(this.mount.clientWidth, this.mount.clientHeight)
+      renderer.shadowMap.enabled = true
       this.camera = camera
       this.scene = scene
       this.renderer = renderer
@@ -26,18 +27,38 @@ class Three extends Component {
       camera.lookAt(scene.position)
 
       const geometry = new THREE.BoxGeometry(1, 2, 1, 4);//几何
+      geometry.castShadow = true
       this.mount.appendChild(renderer.domElement)
       var cube = new THREE.Mesh(geometry, cubeMaterial);
+      cube.receiveShadow = true;
+      cube.castShadow = true;
       this.cube = cube
+      // 增加光源
+      const spotLight = new THREE.SpotLight(0xffffff)
+      spotLight.position.set(-10, 40, 80)
+      spotLight.castShadow = true
+
+      // 平面
+      // var geometry1 = new THREE.PlaneGeometry(40, 40);
+      // var material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+      // var plane = new THREE.Mesh(geometry1, material);
+      // this.scene.add(plane);
+
+
       this.scene.add(cube)
+      this.scene.add(spotLight)
       this.animate()
    }
    animate = () => {
       requestAnimationFrame(this.animate);
-      this.cube.rotation.x += 0.01;
-      this.cube.rotation.y += 0.01;
-      this.cube.rotation.z += 0.05;
+      this.cube.rotation.x+=0.1
+       this.cube.rotation.y+=0.1
+      // this.camera.position.x += 0.1;
+      // this.camera.position.y += 0.1;
+      this.camera.lookAt(this.cube.position)
+
       this.renderer.render(this.scene, this.camera);
+      this.renderer.shadowMap.enabled = true
    }
    componentWillUnmount() {
       this.mount.removeChild(this.renderer.domElement)
@@ -46,7 +67,7 @@ class Three extends Component {
       return (
          <div
             id="canvas"
-            style={{ width: '600px', height: '600px', background: '#888' }}
+            style={{ width: '600px', height: '600px', background: 'red' }}
             ref={(mount) => { this.mount = mount }}
          />
       );
