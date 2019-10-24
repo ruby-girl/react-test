@@ -28,34 +28,34 @@ class allList extends Component {
         return (
             <div>
                 <div>
-                    <input onChange={this.inputChange.bind(this)} value={this.state.inputValue} />
-                    <button onClick={this.addItem.bind(this)}>点击增加</button></div>
+                    <input onChange={this.inputChange} value={this.state.inputValue} />
+                    <button onClick={this.addItem}>点击增加</button></div>
                 <ul>
                     {this.state.list.map((item, i) => {
-                        return <Item txt={item} itemIndex={i} key={i} delItem={this.delItems.bind(this)}></Item>
+                        return <Item txt={item} itemIndex={i} key={i} delItem={this.delItems}></Item>
                     })}
                 </ul>
-                <Three txt="这是父组件传递给子组件" itemIndex={1} delItem={this.delItems.bind(this)} />
+                <Three txt="这是父组件传递给子组件" itemIndex={1} delItem={this.delItems} />
                 <Link to={{ pathname: "/three/9" }}>测试路由参数传递方式 Link router test to three</Link>
                 <div onClick={() => this.props.history.push({ pathname: "/three/" + 9 })}>测试路由参数传递方式router test to three</div>
             </div>
         )
     }
 
-    inputChange(e) {
+    inputChange=(e)=>{
         // this.state.inputValue=e.target.value
         this.setState({
             inputValue: e.target.value
         })
     }
-    addItem() {
+    addItem=()=>{
         this.state.list.push(this.state.inputValue)
         this.setState({
             list: this.state.list,
             inputValue:''
         })
     }
-    delItems(i) {
+    delItems=(i)=> {
         type[i].call(this)
         let list = this.state.list
         list.splice(i, 1)

@@ -21,12 +21,12 @@ class Three extends Component {
       this.camera = camera
       this.scene = scene
       this.renderer = renderer
-      camera.position.z = 10
-      camera.position.x = 10
-      camera.position.y = 10
+      camera.position.z = 30
+      camera.position.x = -20
+      camera.position.y = 40
       camera.lookAt(scene.position)
 
-      const geometry = new THREE.BoxGeometry(1, 2, 1, 4);//几何
+      const geometry = new THREE.BoxGeometry(1, 2, 1, 2);//几何
       geometry.castShadow = true
       this.mount.appendChild(renderer.domElement)
       var cube = new THREE.Mesh(geometry, cubeMaterial);
@@ -38,21 +38,29 @@ class Three extends Component {
       spotLight.position.set(-10, 40, 80)
       spotLight.castShadow = true
 
-      // 平面
-      // var geometry1 = new THREE.PlaneGeometry(40, 40);
-      // var material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-      // var plane = new THREE.Mesh(geometry1, material);
-      // this.scene.add(plane);
-
-
+      this.plane()
       this.scene.add(cube)
       this.scene.add(spotLight)
       this.animate()
    }
+
+   // 平面
+    plane=()=>{
+      let planeGeometry = new THREE.PlaneGeometry(60, 20, 10, 10) // 生成平面
+      let planeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff}) // 材质
+      let plane = new THREE.Mesh(planeGeometry, planeMaterial)
+      plane.rotation.x = -0.5 * Math.PI
+      plane.position.x = 0
+      plane.position.y = -1
+      plane.position.z = 0
+      plane.receiveShadow = true
+      this.scene.add(plane);
+    }
+
    animate = () => {
-      requestAnimationFrame(this.animate);
-      this.cube.rotation.x+=0.1
-       this.cube.rotation.y+=0.1
+      //requestAnimationFrame(this.animate);
+      // this.cube.rotation.x+=0.1
+      //  this.cube.rotation.y+=0.1
       // this.camera.position.x += 0.1;
       // this.camera.position.y += 0.1;
       this.camera.lookAt(this.cube.position)
@@ -73,6 +81,5 @@ class Three extends Component {
       );
    }
 }
-//   ReactDOM.render(<Scene />, document.getElementById('canvas'))
 
 export default Three;
